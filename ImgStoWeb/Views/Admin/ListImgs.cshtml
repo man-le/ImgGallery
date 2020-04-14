@@ -1,0 +1,48 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<ImgStoWeb.ApiModels.ImgModel>
+@{
+    ViewBag.Title = "ListImgs";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Img Name</td>
+            <td>Uploaded By</td>
+            <td>Uploaded Date</td>
+            <td>Views</td>
+            <td>Like</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1;}
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>@i</td>
+            <td>@item.ImgName</td>
+            <td>@item.UploadBy</td>
+            <td>@item.UploadDate</td>
+            <td>@item.Views</td>
+            <td>@item.LikeCount</td>
+            <td>
+            <td>
+                <img width="200" height="200" src="@item.ImgURL" />
+            </td>
+        </tr>
+            i = i + 1;
+        }
+    </tbody>
+</table>
+<div>
+    <h6>Pages</h6>
+    <span>
+        <a>
+            @Html.PagedListPager(Model, pageNumber => Url.Action("ListImgs", new { pageNumber }))
+        </a>
+    </span>
+</div>
+

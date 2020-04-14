@@ -1,0 +1,129 @@
+﻿@model List<ImgStoWeb.ApiModels.CategoryModel>
+ <!--Sidebar-->
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <div class="card">
+                    <div class="card-header">
+                        <a href="@Url.Action("Index")" class="nav-link active">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </div>
+
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="accordion" id="example">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <a class="nav-link dropItem" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fas fa-images"></i>
+                                Categories
+                            </a>
+                        </div>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#example">
+                            <ul>
+                                @foreach (var item in Model)
+                                {
+                                    <li class="no-bullet">
+                                        <a class="nav-link categoryDrop" href="#">
+                                            <span>@item.CategoryName</span>
+                                            @foreach (var sub in item.SubCategoryName)
+                                            {
+                                                <div hidden class="innerSub">@sub</div>
+                                            }
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="card">
+                    <div class="card-header">
+                        <a href="@Url.Action("MostView")" class="nav-link">
+                            <i class="far fa-eye"></i>
+                            Most View
+                        </a>
+                    </div>
+
+                </div>
+
+            </li>
+            <li class="nav-item">
+                <div class="card">
+                    <div class="card-header">
+                        <a href="@Url.Action("Popular")" class="nav-link">
+                            <i class="fas fa-heart"></i>
+                            Popular
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            @if (Session["User"] != null)
+            {
+                <li class="nav-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="@Url.Action("Upload")" class="nav-link">
+                                <i class="fas fa-arrow-circle-up"></i>
+                                Upload
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="@Url.Action("MyFavorite")" class="nav-link">
+                                <i class="fas fa-star"></i>
+                                My favorite
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <div class="subCatContent">
+
+        </div>
+        <div class="card" style="bottom: 1px; position: absolute;width: 100%;">
+            @if (Session["User"] != null)
+            {
+                <div class="card-header">
+                    <a href="@Url.Action("UserInfo","Home")" class="nav-link" style="font-size:small">
+                        <span>
+                            <svg height="50" width="50">
+                                <circle cx="25" cy="25" r="20" stroke="black" stroke-width="3" fill="red" />
+                            </svg>
+                        </span>
+                        @Session["User"]
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="card-header bottomBtn">
+                    <a href="@Url.Action("Login")" class="nav-link">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In
+                    </a>
+                </div>
+                <div class="card-header bottomBtn">
+                    <a href="@Url.Action("SignUp")" class="nav-link">
+                        <i class="fas fa-user-plus"></i>
+                        Sign Up
+                    </a>
+                </div>
+            }
+
+        </div>
+    </div>
+</nav>
+<!--End sidebar-->

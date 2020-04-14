@@ -1,0 +1,174 @@
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    font-size: larger;
+    overflow: visible;
+  }
+  .sidebar .nav-link {
+    font-weight: 500;
+    color: #30336b;
+  }
+  
+  .sidebar .nav-link .feather {
+    margin-right: 4px;
+    color: #999;
+  }
+  
+  .sidebar .nav-link.active {
+    color: #eb2f06;
+  }
+.nav-item .card-header:hover{
+    background-color: #38ada9;
+}
+.nav-item .card-header a:onclick{
+    background-color: #38ada9;
+}
+  .sidebar .nav-link:hover .feather,
+  .sidebar .nav-link.active .feather {
+    color: inherit;
+  }
+  .nav-item{
+        font-size: larger;
+  }
+  .sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+  }
+[role="main"] {
+    padding-top: 133px; /* Space for fixed navbar */
+  }
+  .navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, .25);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  }
+  .mainItem{
+      margin-top: 65px;
+  }
+ .no-bullet{
+   list-style-type: none;
+ }
+ .subCatContent{
+    position: absolute;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    font-size: larger;
+    background: #95a5a6;
+    margin-left: 240px;
+    opacity: 0;
+    width: 200px;
+ }
+ .subCatMove{
+   animation: subCatFrame 0s ease-in 0s 1 forwards;
+ }
+ @keyframes subCatFrame{
+  0% {opacity:0;}
+  50%{opacity:0.5;}
+  100%{opacity:0.9;}
+ }
+ .subCat:hover{
+    color: lawngreen;
+ }
+
+/* Style the Image Used to Trigger the Modal */
+.imgModal {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .imgModal:hover {
+        opacity: 0.7;
+    }
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+.caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, .caption {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 50px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.bottomBtn:hover {
+    background-color: #38ada9;
+}

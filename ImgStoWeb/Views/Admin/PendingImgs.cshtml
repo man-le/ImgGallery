@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "PendingImgs";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    @if(TempData["IsSuccess"]!=null){
+        if ((bool)TempData["IsSuccess"])
+        {
+            <h1>Success</h1>
+        }
+        else
+        {
+            <h1>Error</h1>
+        }
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Image Name</th>
+                <th>Posted By</th>
+                <th>Uploaded Date</th>
+                <th>Category Name</th>
+                <th>Image</th>
+                <th></th>
+                <th></th>
+                <th>Is Duplicate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 0;}
+            @foreach(ImgStoWeb.ApiModels.ImgModel img in ViewBag.Imgs)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@img.ImgName</td>
+                    <td>@img.UploadBy</td>
+                    <td>@img.UploadDate</td>
+                    <td>@img.CategoryName</td>
+                    <td>
+                        <img width="200" height="200" src="@img.ImgURL"/>
+                    </td>
+                    <td><a href="@Url.Action("ConfirmImg")?imgId=@img.ImgId">Confirm</a></td>
+                    <td><a href="@Url.Action("DeleteImg")?imgId=@img.ImgId">Delete</a></td>
+                    <td>@Html.Raw(ViewBag.IsDup[i])</td>
+                </tr>
+                i = i + 1;
+            }
+        </tbody>
+    </table>
+</div>
+

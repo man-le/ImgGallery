@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "UserInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ImgStoWeb.ModelViews.User
+@section Sidebar{
+    @Html.Raw(Html.Action("SideBar"))
+}
+<div class="row">
+    <div class="col-md-8 ">
+        <form method="post" action="@Url.Action("HandleChangePwd")">
+            <div class="form-group">
+                <label for="UserId" class="form-control">User Id</label>
+                <input value="@Model.UserId" name="UserId" hidden class="form-control" />
+                <input id="UserId" value="@Model.UserId"  disabled class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Password" class="form-control">Password</label>
+                <input type="password" id="Password"  value="@Model.Pwd" class="form-control" name="Pwd" />
+            </div>
+            <button type="submit" class="btn btn-warning">Change password</button>
+        </form>
+    </div>
+    <div class="col-md-4 ">
+        <button id="SignOut"  class="btn btn-success">Sign out</button>
+    </div>
+</div>
+@section scripts{
+    <script>
+       $("#SignOut").click(function(event){
+           $.ajax({
+               url: "@Url.Action("HandleSignOut")",
+               method: "POST",
+               success: function () {
+                   window.location.href = "@Url.Action("Index")";
+               }
+           });  
+       });
+    </script>
+}

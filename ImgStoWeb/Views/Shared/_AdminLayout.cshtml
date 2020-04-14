@@ -1,0 +1,13 @@
+﻿@Html.Partial("_AdminHeader")
+@RenderSection("styles", required: false)
+</head>
+<body>
+    <div id="wrapper">
+        @Html.Partial("_AdminSidebar")
+        @Html.Partial("_AdminTopbar")
+        @RenderBody()
+        @Html.Partial("_AdminFooter")
+        @RenderSection("scripts", required: false)
+</body>
+
+</html>

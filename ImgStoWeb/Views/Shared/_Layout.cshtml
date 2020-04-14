@@ -1,0 +1,15 @@
+﻿@Html.Partial("_HomeHeader")
+@RenderSection("styles", required: false)
+@Html.Partial("_HomeTopbar")
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            @RenderSection("Sidebar", required:false);
+            <main class="col-md-9 ml-sm-auto col-lg-19 px-4 row mainItem">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    @Html.Partial("_HomeFooter")
+    @RenderSection("scripts", required: false)
+</body>

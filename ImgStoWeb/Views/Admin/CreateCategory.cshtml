@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "CreateCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    @if (TempData["IsSuccess"] != null)
+    {
+        if ((bool)TempData["IsSuccess"])
+        {
+            <h1>Created</h1>
+        }
+        else
+        {
+            <h1>Errors</h1>
+        }
+    }
+    <form method="post" action="@Url.Action("HandleCreateCat")">
+        <div class="form-group">
+            <label for="CatId">Category Id</label>
+            <input id="CatId" class="form-control" name="CategoryId" />
+        </div>
+        <div class="form-group">
+            <label for="CatName">Category Name</label>
+            <input id="CatName" class="form-control" name="CategoryName" />
+        </div>
+        <button type="submit" class="btn btn-success">Create</button>
+    </form>
+
+    </div>

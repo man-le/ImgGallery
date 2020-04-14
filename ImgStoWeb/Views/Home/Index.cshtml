@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section Sidebar{
+    @Html.Raw(Html.Action("SideBar"))
+}
+<h2>Welcome to Dream Albums</h2>
+<hr>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel tortor interdum, lobortis odio id, cursus ante. Integer tortor leo, varius in libero ac, vulputate tristique arcu. Nullam porta sem eu odio rutrum bibendum. Quisque efficitur condimentum ultrices. Morbi ultrices augue eu lobortis ultrices. Maecenas quis leo in lacus iaculis placerat a vel eros. In hac habitasse platea dictumst. Nulla congue sapien sed dolor porta condimentum. Fusce non laoreet risus.
+    <br>
+
+    Curabitur vel vulputate nisl, ut hendrerit turpis. Pellentesque porta massa a commodo feugiat. Duis quis lobortis eros. Pellentesque semper erat quis finibus vulputate. Donec dapibus tortor vitae lacinia molestie. Aenean eu leo nulla. In a quam fringilla, mattis lacus in, pretium nisl. Praesent quis neque odio. Vivamus malesuada justo vitae lobortis suscipit. Vestibulum eu eros est. Sed purus felis, dictum imperdiet lectus vitae, tincidunt feugiat nisl.
+    <br>
+
+    Morbi euismod, quam interdum porta accumsan, risus quam gravida arcu, nec sollicitudin dui nunc in diam. Nullam sed tortor quis quam dignissim efficitur nec quis diam. Curabitur scelerisque facilisis risus in blandit. Fusce pellentesque libero eu magna consectetur, quis blandit erat rutrum. Duis bibendum sem nisl, nec auctor lectus cursus et. Donec ac mauris ultrices, commodo lacus fermentum, vulputate nisi. Praesent quis posuere ante. Phasellus eu pulvinar tellus.
+    <br>
+    In posuere, enim in lobortis interdum, ipsum justo aliquet leo, in tempus tellus eros quis diam. Morbi imperdiet erat non dolor cursus accumsan. Vivamus non odio non tortor facilisis rhoncus eu eu magna. Vestibulum nibh nibh, molestie eget sapien ac, congue imperdiet eros. Nulla in porta ipsum. Morbi in sem at ante sagittis dignissim. Nam elit sem, auctor nec risus quis, tristique dapibus enim. Vivamus convallis dolor non bibendum congue. Nullam eleifend viverra sagittis. Etiam vitae enim ac dui dictum dictum posuere volutpat mauris. Vestibulum congue dictum enim, vitae maximus risus tincidunt eu. Suspendisse non ligula vel libero lobortis malesuada eget sed nulla. Praesent sollicitudin tristique volutpat. Sed vehicula purus condimentum, pretium neque ac, facilisis risus. Pellentesque sed arcu id ipsum mattis accumsan at eu orci. Duis sollicitudin in turpis id dignissim.
+    <br>
+    Maecenas vitae fermentum augue, non efficitur mi. Fusce id dui cursus, hendrerit dolor eget, viverra turpis. Vestibulum laoreet posuere elit, vitae fringilla odio malesuada a. Fusce vestibulum, quam ullamcorper tempor maximus, libero dolor malesuada justo, lacinia tincidunt felis nulla a lacus. In hac habitasse platea dictumst. Duis ut posuere enim. Morbi vulputate at turpis eu maximus. Integer condimentum nibh ex, in imperdiet massa pellentesque at. Donec eget rhoncus justo, iaculis facilisis neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    <br>
+</p>
+@section scripts{
+    <script>
+        $(".categoryDrop").click(function (event) {
+    var currItem = event.target;
+    $(".subCatContent").empty();
+    $(currItem).siblings(".innerSub").each(function (index, data) {
+        $(".subCatContent").append(
+            "<ul class=\"no-bullet\"> <li> <a class=\"nav-link subCat\" href=\"@Url.Action("Category")?subCat=" + data.innerHTML + "\">" + data.innerHTML + " </a> </li> </ul>"
+        );
+    });
+    $(".subCatContent").addClass("subCatMove");
+        });
+        $("#SearchBar").keyup(function (event) {
+            var currItem = event.target;
+            var content = $(currItem).val();
+            $.ajax({
+                url:"@Url.Action("HandleSearch", "Home")",
+                data: { "content": content },
+                method: "POST",
+                success: function (data) {
+                    $(".mainItem").empty();
+                    $.each(data, function (index, value) {
+                        $(".mainItem").append(
+                            " <div class=\"col-md-4\">" +
+                            "<div class=\"card mb-4 shadow-sm\">" +
+                            "<img data-ImgId=\"" + value.ImgId + "\" class=\"bd-placeholder-img card-img-top imgModal\" src=\"" + value.ImgURL + "\" height=\"225\" />" +
+                            "<div class=\"card-body\">" +
+                            "<p class=\"card-text\">Upload by:" + value.UploadBy + "</p>" +
+                            "<p class=\"card-text\">Upload date:" + value.UploadDate + "</p>" +
+                            "<div class=\"d-flex justify-content-between align-items-center\">" +
+                            "<div class=\"btn-group\">" +
+                            "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\">" +
+                            "<i class=\"far fa-eye\"></i>" +
+                            value.Views +
+                            "</button>" +
+                            "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\">" +
+                            "<i class=\"far fa-heart\"></i>" +
+                            value.LikeCount +
+                            "</button>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "<div class=\"modal\">" +
+                            "<span class=\"close\">&times;</span>" +
+                            "<img class=\"modal-content imgInside\" src=\"" + value.ImgURL + "\">"+
+                            "<div class=\"caption\">" + value.ImgName + "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                        );
+                    })
+                }
+            })
+
+        });
+    </script>
+}

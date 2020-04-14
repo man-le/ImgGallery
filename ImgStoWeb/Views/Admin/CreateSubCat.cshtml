@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "CreateSubCat";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    @if (TempData["IsSuccess"] != null)
+    {
+        if ((bool)TempData["IsSuccess"])
+        {
+            <h1>Created</h1>
+        }
+        else
+        {
+            <h1>Errors</h1>
+        }
+    }
+
+    <form method="post" action="@Url.Action("HandleSubCat")">
+        <label for="Cat">Category</label>
+        <select id="Cat" required name="FatherName" class="form-control">
+            @foreach (ImgStoWeb.ApiModels.CategoryModel str in ViewBag.Category)
+            {
+                <option>@str.CategoryName</option>
+            }
+        </select>
+        <div class="form-group">
+            <label for="SubId">Sub category id</label>
+            <input class="form-control" id="SubId" name="SubId" />
+        </div>
+        <div class="form-group">
+            <label for="SubName">Sub category name</label>
+            <input class="form-control" id="SubName" name="SubName" />
+        </div>
+        <button type="submit" class="btn btn-success">Create</button>
+    </form>
+</div>
+

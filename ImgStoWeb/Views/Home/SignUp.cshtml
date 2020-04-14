@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/Home")/css/normalize.css">
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+    <form action="@Url.Action("HandleSignUp")" method="post">
+
+        <h1>Sign Up</h1>
+
+        <fieldset>
+            <label for="name">Name:</label>
+            <input type="text" id="UserId" name="UserId">
+
+
+            <label for="password">Password:</label>
+            <input type="password" id="Pwd" name="Pwd">
+
+        </fieldset>
+        <button type="submit">Sign Up</button>
+    </form>
+
+</body>
+</html>

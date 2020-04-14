@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Sidebar{
+    @Html.Raw(Html.Action("SideBar"))
+}
+@if (TempData["IsSuccess"] != null)
+{
+    if ((bool)TempData["IsSuccess"])
+    {
+        <h1>Created</h1>
+    }
+    else
+    {
+        <h1>Errors</h1>
+    }
+}
+
+<div class="row">
+    <form class="col-md-6" enctype="multipart/form-data" method="post" action="@Url.Action("HandleCreateImg")">
+        <div class="form-group">
+            <label for="ImgName">Image Name</label>
+            <input type="text" id="ImgName" name="ImgName" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="CategoryName">Category</label>
+            <select id="CategoryName" name="CategoryName" class="form-control" required>
+                @foreach (string str in ViewBag.Categories)
+                {
+                    <option>@str</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ImgFile">File</label>
+            <input type="file" id="ImgFile" required class="form-control" name="postedFile" />
+        </div>
+        <button type="submit" class="btn btn-success form-control">Create</button>
+    </form>
+    <div class="col-md-6">
+        <div class="imgBG"></div>
+        <div class="d-flex justify-content-center imgContent" id="ImgContent">
+        </div>
+    </div>
+</div>
+
+
+@section styles{
+    <style>
+        .imgBG {
+            position: absolute;
+            background-color: #7f8fa6;
+            opacity: 0.3;
+            width: 90%;
+            height: 450px;
+        }
+
+        .imgContent {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            align-content: center;
+            margin-left: 60px;
+            margin-top: 20px;
+        }
+    </style>
+}
+@section scripts{
+    <script>
+
+        $("document").ready(function () {
+            $("#ImgFile").change(function (event) {
+                $("#ImgContent").empty();
+                $(".modal").empty();
+                var currItem = event.target;
+                $(currItem.files).each(function (index, data) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#ImgContent").append(
+                            "<img id=\"myImg\" src =\"" + e.target.result + "\" width=\"400px\" height=\"400px\"/>"
+                        );
+                    }
+                    reader.readAsDataURL(data);
+                });
+
+            });
+
+
+        });
+         $(".categoryDrop").click(function (event) {
+    var currItem = event.target;
+    $(".subCatContent").empty();
+    $(currItem).siblings(".innerSub").each(function (index, data) {
+        $(".subCatContent").append(
+            "<ul class=\"no-bullet\"> <li> <a class=\"nav-link subCat\" href=\"@Url.Action("Category")?subCat=" + data.innerHTML + "\">" + data.innerHTML + " </a> </li> </ul>"
+        );
+    });
+    $(".subCatContent").addClass("subCatMove");
+});
+
+    </script>
+}

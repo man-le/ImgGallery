@@ -1,0 +1,39 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ListCategories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model IPagedList<ImgStoWeb.ApiModels.CategoryModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Category name</td>
+            <td>Number of subcategory</td>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.CategoryName</td>
+                <td>@item.SubCategoryName.Count()</td>
+            </tr>
+            i = i + 1;
+        }
+    </tbody>
+</table>
+<div>
+    <h6>Pages</h6>
+    <span>
+        <a>
+            @Html.PagedListPager(Model, pageNumber => Url.Action("ListImgs", new { pageNumber }))
+        </a>
+    </span>
+</div>
+
+

@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "MostView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Sidebar{
+    @Html.Raw(Html.Action("SideBar"))
+}
+<div class="row">
+    @foreach (ImgStoWeb.ApiModels.ImgModel img in ViewBag.Imgs)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img data-ImgId="@img.ImgId" class="bd-placeholder-img card-img-top imgModal" src="@img.ImgURL" height="225" />
+                <div class="card-body">
+                    <p class="card-text">Upload by:@img.UploadBy</p>
+                    <p class="card-text">Upload date: @img.UploadDate</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="far fa-eye"></i>
+                                View:@img.Views
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="far fa-heart"></i>
+                                Likes:@img.LikeCount
+                            </button>
+                            @if (Session["User"] != null)
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-secondary addToFav">
+                                    Add to favorite
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content imgInside" src="@img.ImgURL">
+                    <div class="caption">@img.ImgName</div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+@section scripts{
+    <script>
+        $(".categoryDrop").click(function (event) {
+            var currItem = event.target;
+            $(".subCatContent").empty();
+            $(currItem).siblings(".innerSub").each(function (index, data) {
+            $(".subCatContent").append(
+                "<ul class=\"no-bullet\"> <li> <a class=\"nav-link subCat\" href=\"@Url.Action("Category")?subCat=" + data.innerHTML + "\">" + data.innerHTML + " </a> </li> </ul>"
+            );
+        });
+            $(".subCatContent").addClass("subCatMove");
+        });
+        $(".imgModal").click(function (event) {
+            var currItem = event.target;
+            var imgId = $(currItem).attr("data-ImgId");
+            var modal = $(currItem).siblings(".modal");
+            var close = $(modal).children(".close");
+            modal.css("display", "block");
+            modal.attr("src", $(currItem).attr("src"));
+            $(close).click(function (event) {
+                modal.css("display", "none");
+            })
+            $.ajax({
+                url: "@Url.Action("HandleViewCount")",
+                method: "POST",
+                data: { "imgId": imgId },
+                success: function () {
+
+                }
+            });
+        });
+        $(".addToFav").click(function (event) {
+            var currItem = event.target;
+            var id = $(currItem).parent().parent().parent().siblings(".imgModal").attr("data-ImgId");
+            $.ajax({
+                url: "@Url.Action("HandleFav", "Home")",
+                method: "POST",
+                data: { "imgId": id },
+                success: function () {
+                    alert("Liked")
+                }
+            });
+        });
+         $("#SearchBar").keyup(function (event) {
+            var currItem = event.target;
+            var content = $(currItem).val();
+            $.ajax({
+                url:"@Url.Action("HandleSearch", "Home")",
+                data: { "content": content },
+                method: "POST",
+                success: function (data) {
+                    $(".mainItem").empty();
+                    $.each(data, function (index, value) {
+                        $(".mainItem").append(
+                            " <div class=\"col-md-4\">" +
+                            "<div class=\"card mb-4 shadow-sm\">" +
+                            "<img data-ImgId=\"" + value.ImgId + "\" class=\"bd-placeholder-img card-img-top imgModal\" src=\"" + value.ImgURL + "\" height=\"225\" />" +
+                            "<div class=\"card-body\">" +
+                            "<p class=\"card-text\">Upload by:" + value.UploadBy + "</p>" +
+                            "<p class=\"card-text\">Upload date:" + value.UploadDate + "</p>" +
+                            "<div class=\"d-flex justify-content-between align-items-center\">" +
+                            "<div class=\"btn-group\">" +
+                            "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\">" +
+                            "<i class=\"far fa-eye\"></i>" +
+                            value.Views +
+                            "</button>" +
+                            "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\">" +
+                            "<i class=\"far fa-heart\"></i>" +
+                            value.LikeCount +
+                            "</button>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "<div class=\"modal\">" +
+                            "<span class=\"close\">&times;</span>" +
+                            "<img class=\"modal-content imgInside\" src=\"" + value.ImgURL + "\">"+
+                            "<div class=\"caption\">" + value.ImgName + "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                        );
+                    })
+                }
+            })
+
+        });
+    </script>
+}
+
